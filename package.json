@@ -14,13 +14,12 @@
 		"check": "astro check"
 	},
 	"dependencies": {
-		"@astrojs/check": "^0.9.4",
 		"@astrojs/mdx": "3.1.8",
 		"@astrojs/rss": "4.0.7",
 		"@astrojs/sitemap": "3.2.0",
 		"@astrojs/tailwind": "5.1.1",
 		"astro": "4.16.7",
-		"astro-expressive-code": "^0.37.1",
+		"astro-expressive-code": "^0.37.0",
 		"astro-icon": "^1.1.1",
 		"astro-robots-txt": "^1.0.0",
 		"astro-webmanifest": "^1.0.0",
@@ -34,14 +33,15 @@
 		"satori": "0.11.2",
 		"satori-html": "^0.3.2",
 		"sharp": "^0.33.5",
-		"typescript": "^5.6.3",
 		"unified": "^11.0.5",
-		"unist-util-visit": "^5.0.0"
+		"unist-util-visit": "^5.0.0",
+		"@astrojs/check": "^0.9.4",
+		"typescript": "^5.6.3"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.4",
 		"@biomejs/biome": "^1.9.4",
-		"@iconify-json/mdi": "^1.2.1",
+		"@iconify-json/mdi": "^1.2.0",
 		"@pagefind/default-ui": "^1.1.1",
 		"@resvg/resvg-js": "^2.6.2",
 		"@tailwindcss/typography": "^0.5.15",
@@ -53,8 +53,8 @@
 		"prettier-plugin-astro": "0.14.1",
 		"prettier-plugin-tailwindcss": "^0.6.8",
 		"reading-time": "^1.5.0",
-		"remark-unwrap-images": "^4.0.1",
-		"tailwindcss": "^3.4.14",
+		"remark-unwrap-images": "^4.0.0",
+		"tailwindcss": "^3.4.13",
 		"typescript": "^5.6.2"
 	}
 }

@@ -12,7 +12,7 @@ import { siteConfig } from "./src/site.config";
 
 // Remark plugins
 import remarkDirective from "remark-directive"; /* Handle ::: directives as nodes */
-import remarkUnwrapImages from "remark-unwrap-images";
+import rehypeUnwrapImages from "rehype-unwrap-images";
 import { remarkAdmonitions } from "./src/plugins/remark-admonitions"; /* Add admonitions */
 import { remarkReadingTime } from "./src/plugins/remark-reading-time";
 
@@ -84,8 +84,22 @@ export default defineConfig({
 					target: "_blank",
 				},
 			],
+      [
+        rehypeUnwrapImages,
+        {
+          tagName: "figure",
+          imgSelector: "img",
+          wrapper: {
+            type: "element",
+            tagName: "div",
+            properties: {
+              className: "image-wrapper",
+            },
+          },
+        },
+      ],
 		],
-		remarkPlugins: [remarkUnwrapImages, remarkReadingTime, remarkDirective, remarkAdmonitions],
+		remarkPlugins: [remarkReadingTime, remarkDirective, remarkAdmonitions],
 		remarkRehype: {
 			footnoteLabelProperties: {
 				className: [""],
