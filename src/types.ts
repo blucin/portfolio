@@ -13,6 +13,7 @@ export interface SiteConfig {
 		link: string;
 		pingback?: string;
 	};
+  pageVisitAPI: string;
 }
 
 export interface PaginationLink {
