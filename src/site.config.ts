@@ -27,6 +27,7 @@ export const siteConfig: SiteConfig = {
 		// Webmention.io API endpoint. Get your own here: https://webmention.io/, and follow this blog post: https://astro-cactus.chriswilliams.dev/posts/webmentions/
 		link: "",
 	},
+  pageVisitAPI: "<enter your new api endpoint link here>"
 };
 
 // Used to generate links in both the Header & Footer.
