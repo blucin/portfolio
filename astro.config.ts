@@ -24,6 +24,11 @@ export default defineConfig({
 	image: {
 		domains: [],
 	},
+  server: {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    }
+  },
 	integrations: [
 		expressiveCode(expressiveCodeOptions),
 		icon(),
