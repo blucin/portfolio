@@ -1,0 +1,64 @@
+---
+interface Props {
+  apiEndpoint: string;
+}
+const { apiEndpoint } = Astro.props;
+---
+<script define:vars={{ apiEndpoint }} is:inline>
+  console.log('Client script starting...');
+
+  // Immediately Invoked Async Function Expression (IIFE)
+  (async () => {
+    async function hashVisitor() {
+      const userAgent = navigator.userAgent;
+      const response = await fetch('https://api.ipify.org?format=json');
+      const { ip } = await response.json();
+
+      const text = new TextEncoder().encode(`${ip}#${userAgent}`);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', text);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    try {
+      if (document.cookie.includes('visitor_hash=')) {
+        console.log('Visitor hash found in cookie');
+        return;
+      }
+      const visitorHash = await hashVisitor();
+      const response = await fetch(`${apiEndpoint}/visits`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: btoa(JSON.stringify({
+          user_hash: visitorHash,
+        })),
+      });
+
+      const data = await response.json();
+
+      if (data.error === "visitor already exists") {
+        document.cookie = `visitor_hash=${visitorHash}; max-age=${60 * 60 * 24 * 30}; SameSite=None; Secure`;
+        return;
+      }
+
+      if (!data.visits) {
+        return;
+      }
+
+      const visitDisplay = document.getElementById('visit-count');
+      if (visitDisplay) {
+        visitDisplay.textContent = `Total Unique Visits: ${data.visits}`;
+      }
+    } catch (error) {
+      console.error('Error occurred:', error);
+      const visitDisplay = document.getElementById('visit-count');
+      if (visitDisplay) {
+        visitDisplay.textContent = 'Error loading visit count';
+      }
+    }
+  })().catch(error => {
+    console.error('Top-level error:', error);
+  });
+</script>

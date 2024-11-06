@@ -1,23 +1,33 @@
 ---
 import SocialList from "@/components/SocialList.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
+import VisitTracker from "@/components/VisitTracker.astro";
 import { getAllPosts, sortMDByDate } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
+import { siteConfig } from "@/site-config";
 
 const MAX_POSTS = 10;
 const allPosts = await getAllPosts();
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+let initialVisits = 0;
+try {
+  const response = await fetch(`${siteConfig.pageVisitAPI}/visits`);
+  const data = await response.json();
+  initialVisits = data.visits;
+} catch (error) {
+  console.error('Error fetching initial visits:', error);
+}
 ---
 
 <PageLayout meta={{ title: "Home" }}>
-	<section>
-		<h1 class="title mb-6">Akshar Patel</h1>
-		<p class="mb-4">
-			Hi, I am Akshar! I build web pages, write system programs, and work with cloud and Linux.
-		</p>
+	<section class="space-y-4">
+		<h1 class="title mb-4">Akshar Patel</h1>
+		<p>Hi, I am Akshar! I build web pages, write system programs, and work with cloud and Linux.</p>
 		<SocialList />
+		<p id="visit-count" class="font-bold">Total Unique Visits: {initialVisits}</p>
+		<VisitTracker apiEndpoint={siteConfig.pageVisitAPI} />
 	</section>
-	<section aria-label="Blog post list" class="mt-16">
+	<section aria-label="Blog post list" class="mt-6">
 		<h2 class="title mb-4 text-xl">Posts</h2>
 		<ul class="space-y-3">
 			{
